@@ -26,11 +26,10 @@ public class DiscountServiceImpl implements DiscountService {
 		ProductToProductModelConverter productConverter = new ProductToProductModelConverter();
 		
 		// convert product to productModel and map elements to productModel list
-		List<ProductModel> productModels = discountRepository.getDiscountedProducts(categoryId).stream().map(product ->
-								{ return productConverter.convert(product, priceLabelType);}
+		return discountRepository.getDiscountedProducts(categoryId).stream().map(product -> productConverter.convert(product, priceLabelType)
 						).collect(Collectors.toList());
 		
-		return productModels;
+		
 	}
 
 	
