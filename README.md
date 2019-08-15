@@ -1,4 +1,4 @@
-# JohnLewisProducts
+# retailProducts
 
 
 Create a Restful webservice to request products in category 600001506 that have a price reduction.
@@ -18,14 +18,14 @@ repository -> category api process
 
 service -> repository process for controller
 
-JohnlewisApplication.java -> You can start project with this class.
+RetailProdApplication.java -> You can start project with this class.
 
 resources 
 application.yaml -> project configuration
 
 
 Running the application locally:
-One way is to execute the main method in the com.johnlewis.JohnlewisApplication class from your IDE.
+One way is to execute the main method in the com.retailprod.RetailProdApplication class from your IDE.
 You should install to Lombokinto ide.
 Alternatively you can use the Spring Boot Maven plugin as below:
 mvn spring-boot:run
