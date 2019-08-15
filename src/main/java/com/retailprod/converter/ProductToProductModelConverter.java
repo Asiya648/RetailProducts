@@ -60,9 +60,6 @@ public class ProductToProductModelConverter {
 	
 	/**
 	 * price label processes
-	 * @param labelType Optional<LabelTypeEnum>
-	 * @param price Price
-	 * @return String
 	 */
 	
 	private String printPriceLabel(Optional<LabelTypeEnum> labelType, Price price) {
@@ -96,9 +93,6 @@ public class ProductToProductModelConverter {
 	
 	/**
 	 * Calculate discount persantange
-	 * @param nowPrice Float
-	 * @param beforePrice Float
-	 * @return discountPersantage Float
 	 */
 	private Float calculateDiscountPersentange(Float nowPrice, Float beforePrice) {
 		return ((nowPrice-beforePrice)/beforePrice)*100;
