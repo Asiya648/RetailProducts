@@ -21,13 +21,7 @@ public class ProductToProductModelConvertertTest {
 	
 	private static final String PRODUCT_ID = "123456";
     private static final String TITLE = "title";
-	
-	
-	/*
-	 * Convert tests start
-	 */
-	
-	
+		
 	ProductToProductModelConverter converter;
 
     @Before
@@ -66,10 +60,10 @@ public class ProductToProductModelConvertertTest {
     	assertEquals(PRODUCT_ID, pm.getId());
     	assertEquals(TITLE, pm.getTitle());
     	
-    	//which is the price.now represented as a string, including the currency, e.g. â€œÂ£1.75â€. For values that are integer, if they are less Â£10 return a decimal price, otherwise show an integer price, e.g. â€œÂ£2.00â€ or â€œÂ£10â€.
+    	//which is the price.now represented as a string, including the currency, e.g. â€œÂ£1.75â€. For values that are integer, if they are less Â£10 return a decimal price, otherwise show an integer price, e.g. â€œÂ£2.00â€ or â€œÂ£10â€.
     	assertEquals("Â£5", pm.getNowPrice());
     	
-    	//ShowPercDscount - in which case return â€œx% off - now Â£y.yyâ€.
+    	//ShowPercDscount - in which case return â€œx% off - now Â£y.yyâ€.
     	assertEquals("50% off - now Â£5", pm.getPriceLabel());
 		
 	}
