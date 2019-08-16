@@ -13,7 +13,9 @@ public class ColorSwatchToColorSwatchModelConverter implements Converter<ColorSw
 	public ColorSwatchModel convert(ColorSwatch source) {
 		
 		if(source==null)
+		{
 			return null;
+		}
 		
 		ColorSwatchModel target = new ColorSwatchModel();
 		
