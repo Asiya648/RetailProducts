@@ -15,6 +15,6 @@ public class Price {
 	private Optional<Float> then1;
 	private Optional<Float> then2;
 	private Object now;
-	private CurrencyEnum currency;
+	
 
 }
