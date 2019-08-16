@@ -91,7 +91,7 @@ public class ProductToProductModelConverter {
 			{
 				response= (Float.toString(price.getthen1()));
 			}
-			else if((Float.toString(price.getthen2())).isEmpty() && !(Float.toString(price.getthen1())).isEmpty())
+			else if(((Float.toString(price.getthen2())).isEmpty()) && (!(Float.toString(price.getthen1())).isEmpty()))
 			{
 				response= (Float.toString(price.getthen1()));
 			}
