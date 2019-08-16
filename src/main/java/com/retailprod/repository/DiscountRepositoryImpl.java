@@ -1,6 +1,10 @@
 package com.retailprod.repository;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -28,7 +32,13 @@ public class DiscountRepositoryImpl implements DiscountRepository {
 		
 		RestTemplate restTemplate = new RestTemplate();
 		
-		String resourceUrl = "https://jl-nonprod-syst.apigee.net/v1/categories/"+categoryId+"/products?key=2ALHCAAs6ikGRBoy6eTHA58RaG097Fma";
+		Properties properties = new Properties();
+		
+		InputStream fin = new FileInputStream("src/main/resources/application.properties");
+
+		properties.load(fin);
+		
+		String resourceUrl= properties.getProperty("URL");
 		
 		ResponseEntity<Category> response
 		  = restTemplate.exchange(
@@ -38,13 +48,37 @@ public class DiscountRepositoryImpl implements DiscountRepository {
 					new ParameterizedTypeReference<Category>(){});
 		
 		if(response.getStatusCode().is2xxSuccessful())
+		{
 			log.info("Yayyyy!!! get products from api {}",response.getBody().getProducts());
-		
-		
+			
 		return response.getBody().getProducts();
 	}
+		else {
+			final String EMPTY_STRING = "";
+			List<Character> chars = convertStringToCharList(EMPTY_STRING);
+			
+			
+			 
+		}
+	}
 	
-	
+	public static List<Character> 
+    convertStringToCharList(String str) 
+    { 
+  
+        // Create an empty List of character 
+        List<Character> chars = new ArrayList<>(); 
+  
+        // For each character in the String 
+        // add it to the List 
+        for (char ch : str.toCharArray()) { 
+  
+            chars.add(ch); 
+        } 
+  
+        // return the List 
+        return chars; 
+    } 
 	
 
 }
