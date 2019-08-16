@@ -1,6 +1,8 @@
 package com.retailprod.converter;
 
 import java.util.Optional;
+import java.util.Currency;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,10 +19,14 @@ public class ProductToProductModelConverter {
 	@Autowired
 	private ColorSwatchToColorSwatchModelConverter colorSwatchConverter;
 	
-	public ProductModel convert(Product source, Optional<LabelTypeEnum> labelType) {
+	Currency c = Currency.getInstance("GBP"); 
+	
+	public ProductModel convert(Product source, LabelTypeEnum labelType) {
 		
 		if(source==null)
+		{
 			return null;
+		}
 
 		String priceLabel = printPriceLabel(labelType, source.getPrice());
 		
@@ -41,7 +47,6 @@ public class ProductToProductModelConverter {
 	}
 	
 	/**
-	 * which is the price.now represented as a string, including the currency, e.g. Ã¢â‚¬Å“Ã‚Â£1.75Ã¢â‚¬Â. For values that are integer, if they are less Ã‚Â£10 return a decimal price, otherwise show an integer price, e.g. Ã¢â‚¬Å“Ã‚Â£2.00Ã¢â‚¬Â or  Ã¢â‚¬Å“Ã‚Â£10Ã¢â‚¬Â. 
 	 * @param price Price.class
 	 * @return String
 	 */
@@ -49,12 +54,12 @@ public class ProductToProductModelConverter {
 		Float nowPrice;
 		
 		try {
-			nowPrice = Float.parseFloat((String)price.getNow());
+			nowPrice = Float.parseFloat((String)price.getnow());
 		}catch (Exception e) {
 			
-			nowPrice = 1.23f;
+			
 		}	
-		return nowPrice <10 ? price.getCurrency().getResponse()+Math.round(nowPrice) : price.getCurrency().getResponse()+ nowPrice ;
+		return nowPrice <10 ? c.getSymbol()+Math.round(nowPrice) : c.getSymbol()+ nowPrice ;
 	}
 	
 	
@@ -62,41 +67,45 @@ public class ProductToProductModelConverter {
 	 * price label processes
 	 */
 	
-	private String printPriceLabel(Optional<LabelTypeEnum> labelType, Price price) {
+	private String printPriceLabel(LabelTypeEnum labelType, Price price) {
 		
 		String response="";
 		
-		LabelTypeEnum priceLabel = labelType.map(x -> {
-									return x;
-								}).orElse(LabelTypeEnum.ShowWasNow);
+		LabelTypeEnum priceLabel = labelType.orElse(LabelTypeEnum.ShowWasNow);
 		
 		
-		if(LabelTypeEnum.ShowWasNow.equals(priceLabel)) {
+		if(LabelTypeEnum.ShowWasNow == (priceLabel)) {
 			
 			response = price.getWas().map( x -> {
-				return "Was " +price.getCurrency().getResponse()+x+", now "+nowPrice(price);
+				return "Was " +c.getSymbol()+x+", now "+nowPrice(price);
 			}).orElse("Was "+nowPrice(price)+", now "+nowPrice(price));
 		
 		}
-		else if(LabelTypeEnum.ShowWasThenNow.equals(priceLabel)) 
+		else if(LabelTypeEnum.ShowWasThenNow == (priceLabel)) 
+		{
+			if(!(Float.toString(price.getthen2())).isEmpty())
+			{
+				response= (Float.toString(price.getthen2()));
+			}
+			else if(!(Float.toString(price.getthen1())).isEmpty())
+			{
+				response= (Float.toString(price.getthen1()));
+			}
+			else if((Float.toString(price.getthen2())).isEmpty() && !(Float.toString(price.getthen1())).isEmpty())
+			{
+				response= (Float.toString(price.getthen1()));
+			}
 			log.info(" {}",priceLabel);
-		else if(LabelTypeEnum.ShowPercDscount.equals(priceLabel)) 
+		}
+		else if(LabelTypeEnum.ShowPercDscount == (priceLabel)) 
+		{
+			Float percent= ((Float.parseFloat((String)price.getnow())-price.getwas())/price.getwas())*100;
+			response= String.format("%.0f%%", percent);
 			log.info(" {}",priceLabel);
-		
+		}
 
 		
 		return response;
 	}
 	
-
-	
-	
-	/**
-	 * Calculate discount persantange
-	 */
-	private Float calculateDiscountPersentange(Float nowPrice, Float beforePrice) {
-		return ((nowPrice-beforePrice)/beforePrice)*100;
-	}
-	
-
 }
