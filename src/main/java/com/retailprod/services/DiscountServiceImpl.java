@@ -1,6 +1,7 @@
 package com.retailprod.services;
 
 import java.util.List;
+
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -18,8 +19,7 @@ public class DiscountServiceImpl implements DiscountService {
 	@Autowired
 	private DiscountRepository discountRepository;
 
-	@Override
-	public List<ProductModel> getDiscountedProducts(Integer categoryId, Optional<LabelTypeEnum> priceLabelType) {
+	public List<ProductModel> getDiscountedProducts(Integer categoryId, LabelTypeEnum priceLabelType) {
 		
 		
 		// converter
