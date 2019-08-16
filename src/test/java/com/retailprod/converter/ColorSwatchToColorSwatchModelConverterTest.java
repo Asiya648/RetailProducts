@@ -50,6 +50,67 @@ public class ColorSwatchToColorSwatchModelConverterTest {
         assertEquals(COLOR, colorSwatchModel.getColor());
     }
     
-   
+    @Test
+    public void given_colorSwatch_and_basicColorIsGreen_when_convertColorSwatchToColorSwatchModel_then_returnColorSwatchModel() throws Exception {
+        
+    	//given
+    	ColorSwatch colorSwatch = new ColorSwatch("Green", SKU_ID, COLOR);
+
+        //when
+    	ColorSwatchModel colorSwatchModel = converter.convert(colorSwatch);
+
+        //then
+    	
+        assertEquals("00FF00", colorSwatchModel.getRgbColor());
+        assertEquals(SKU_ID, colorSwatchModel.getSkuid());
+        assertEquals(COLOR, colorSwatchModel.getColor());
+    }
+    
+    @Test
+    public void given_colorSwatch_and_basicColorIsBlue_when_convertColorSwatchToColorSwatchModel_then_returnColorSwatchModel() throws Exception {
+        
+    	//given
+    	ColorSwatch colorSwatch = new ColorSwatch("Blue", SKU_ID, COLOR);
+
+        //when
+    	ColorSwatchModel colorSwatchModel = converter.convert(colorSwatch);
+
+        //then
+    	
+        assertEquals("0000FF", colorSwatchModel.getRgbColor());
+        assertEquals(SKU_ID, colorSwatchModel.getSkuid());
+        assertEquals(COLOR, colorSwatchModel.getColor());
+    }
+    
+    @Test
+    public void given_colorSwatch_and_basicColorIsWhite_when_convertColorSwatchToColorSwatchModel_then_returnColorSwatchModel() throws Exception {
+        
+    	//given
+    	ColorSwatch colorSwatch = new ColorSwatch("White", SKU_ID, COLOR);
+
+        //when
+    	ColorSwatchModel colorSwatchModel = converter.convert(colorSwatch);
+
+        //then
+    	
+        assertEquals("FFFFFF", colorSwatchModel.getRgbColor());
+        assertEquals(SKU_ID, colorSwatchModel.getSkuid());
+        assertEquals(COLOR, colorSwatchModel.getColor());
+    }
+    @Test
+    public void given_colorSwatch_and_basicColorIsBlack_when_convertColorSwatchToColorSwatchModel_then_returnColorSwatchModel() throws Exception {
+        
+    	//given
+    	ColorSwatch colorSwatch = new ColorSwatch("White", SKU_ID, COLOR);
+
+        //when
+    	ColorSwatchModel colorSwatchModel = converter.convert(colorSwatch);
+
+        //then
+    	
+        assertEquals("000000", colorSwatchModel.getRgbColor());
+        assertEquals(SKU_ID, colorSwatchModel.getSkuid());
+        assertEquals(COLOR, colorSwatchModel.getColor());
+    }
 
 }
