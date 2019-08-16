@@ -1,6 +1,7 @@
 package com.retailprod.controller;
 
 import java.util.List;
+
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,7 +43,7 @@ public class DiscountController {
     @GetMapping(value = "/discountedProductsByCategoryId/{categoryId}")
 	public List<ProductModel> getDiscountedProductsByCAtegoryId(@PathVariable(required = true) Integer categoryId, @RequestParam(required = false) LabelTypeEnum priceLabelType){
 		
-		Optional<LabelTypeEnum> labelType = Optional.ofNullable(priceLabelType);
+		LabelTypeEnum labelType = priceLabelType;
 		
 		return discountService.getDiscountedProducts(categoryId, labelType);
 	}
