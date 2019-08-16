@@ -1,6 +1,7 @@
 package com.retailprod.controller;
 
 import static org.mockito.BDDMockito.given;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -26,8 +27,8 @@ import com.retailprod.services.DiscountService;
 public class DiscountControllerTest {
 	
 	private static final Integer CATEGORY_ID = 600001506;
-	private static final Optional<LabelTypeEnum> LABEL_TYPE = Optional.ofNullable(LabelTypeEnum.ShowWasNow);
-	private static final Optional<LabelTypeEnum> EMPTY_LABEL_TYPE = Optional.empty();
+	private static final LabelTypeEnum LABEL_TYPE = LabelTypeEnum.ShowWasNow;
+	private static final LabelTypeEnum EMPTY_LABEL_TYPE = null;
 	
 	@Autowired
     private MockMvc mockMvc;
