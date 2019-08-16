@@ -85,15 +85,15 @@ public class ProductToProductModelConverter {
 		{
 			if(!(Float.toString(price.getthen2())).isEmpty())
 			{
-				response= (Float.toString(price.getthen2()));
+				response= "Was"+c.getSymbol()+Float.toString(price.getWas())+", then"+(Float.toString(price.getthen2()))+", now"+nowPrice(price);
 			}
 			else if(!(Float.toString(price.getthen1())).isEmpty())
 			{
-				response= (Float.toString(price.getthen1()));
+				response= "Was"+c.getSymbol()+Float.toString(price.getWas())+", then"+(Float.toString(price.getthen1()))+", now"+nowPrice(price);
 			}
 			else if(((Float.toString(price.getthen2())).isEmpty()) && (!(Float.toString(price.getthen1())).isEmpty()))
 			{
-				response= (Float.toString(price.getthen1()));
+				response= "Was"+c.getSymbol()+Float.toString(price.getWas())+", then"+(Float.toString(price.getthen1()))+", now"+nowPrice(price);
 			}
 			log.info(" {}",priceLabel);
 		}
@@ -108,4 +108,9 @@ public class ProductToProductModelConverter {
 		return response;
 	}
 	
+
+	
+	
+	
+
 }
