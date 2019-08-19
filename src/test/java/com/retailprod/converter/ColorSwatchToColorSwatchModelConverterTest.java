@@ -101,7 +101,7 @@ public class ColorSwatchToColorSwatchModelConverterTest {
     public void given_colorSwatch_and_basicColorIsBlack_when_convertColorSwatchToColorSwatchModel_then_returnColorSwatchModel() throws Exception {
         
     	//given
-    	ColorSwatch colorSwatch = new ColorSwatch("White", SKU_ID, COLOR);
+    	ColorSwatch colorSwatch = new ColorSwatch("Black", SKU_ID, COLOR);
 
         //when
     	ColorSwatchModel colorSwatchModel = converter.convert(colorSwatch);
