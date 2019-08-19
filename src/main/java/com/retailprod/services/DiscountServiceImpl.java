@@ -1,7 +1,6 @@
 package com.retailprod.services;
 
 import java.util.List;
-
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -19,16 +18,18 @@ public class DiscountServiceImpl implements DiscountService {
 	@Autowired
 	private DiscountRepository discountRepository;
 
-	public List<ProductModel> getDiscountedProducts(Integer categoryId, LabelTypeEnum priceLabelType) {
+	public List<ProductModel> getDiscountedProducts(Integer categoryId, Optional<LabelTypeEnum> priceLabelType) {
 		
 		
 		// converter
 		ProductToProductModelConverter productConverter = new ProductToProductModelConverter();
 		
 		// convert product to productModel and map elements to productModel list
-		return discountRepository.getDiscountedProducts(categoryId).stream().map(product -> productConverter.convert(product, priceLabelType)
-						).collect(Collectors.toList());
-		
+		return discountRepository.getDiscountedProducts(categoryId).stream().map(product ->
+
+		                       { return productConverter.convert(product, priceLabelType);}
+		                       ).collect(Collectors.toList());
+
 		
 	}
 
