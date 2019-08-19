@@ -35,15 +35,16 @@ public class DiscountController {
 	)
 	@ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved list"),
+            @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     }
     )
     @GetMapping(value = "/discountedProductsByCategoryId/{categoryId}")
-	public List<ProductModel> getDiscountedProductsByCAtegoryId(@PathVariable(required = true) Integer categoryId, @RequestParam(required = false) LabelTypeEnum priceLabelType){
+	public List<ProductModel> getDiscountedProductsByCAtegoryId(@PathVariable(required = true) Integer categoryId, @RequestParam(required = false) Optional<LabelTypeEnum> priceLabelType){
 		
-		LabelTypeEnum labelType = priceLabelType;
+		Optional<LabelTypeEnum> labelType = priceLabelType;
 		
 		return discountService.getDiscountedProducts(categoryId, labelType);
 	}
