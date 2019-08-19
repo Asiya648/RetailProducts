@@ -15,6 +15,6 @@ public interface DiscountService {
 	 * @return List<ProductModel>
 	 */
 	
-	List<ProductModel> getDiscountedProducts(Integer categoryId, LabelTypeEnum priceLabelType);
+	List<ProductModel> getDiscountedProducts(Integer categoryId, Optional<LabelTypeEnum> priceLabelType);
 
 }
