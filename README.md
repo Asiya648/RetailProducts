@@ -2,6 +2,7 @@
 
 
 Create a Restful webservice to request products in category 600001506 that have a price reduction.
+This Application returns a JASON response which returns an array of products and each of the element will contain the product id, title, color swatches, nowPrice and the Price label.
 
 
 configuration -> configurations
