@@ -27,8 +27,8 @@ import com.retailprod.services.DiscountService;
 public class DiscountControllerTest {
 	
 	private static final Integer CATEGORY_ID = 600001506;
-	private static final LabelTypeEnum LABEL_TYPE = LabelTypeEnum.ShowWasNow;
-	private static final LabelTypeEnum EMPTY_LABEL_TYPE = null;
+	private static final Optional<LabelTypeEnum> LABEL_TYPE = Optional.ofNullable(LabelTypeEnum.SHOWWASNOW);
+	private static final Optional<LabelTypeEnum> EMPTY_LABEL_TYPE = Optional.empty();
 	
 	@Autowired
     private MockMvc mockMvc;
