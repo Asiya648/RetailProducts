@@ -1,8 +1,11 @@
 package com.retailprod.repository;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
@@ -34,9 +37,17 @@ public class DiscountRepositoryImpl implements DiscountRepository {
 		
 		Properties properties = new Properties();
 		
-		InputStream fin = new FileInputStream("src/main/resources/application.properties");
+		InputStream fin;
+		try {
+			fin = new FileInputStream("src/main/resources/application.properties");
+			properties.load(fin);
+		} catch (IOException e) {
+			
+			log.info("context", e);
 
-		properties.load(fin);
+		}
+
+		
 		
 		String resourceUrl= properties.getProperty("URL");
 		
@@ -54,31 +65,12 @@ public class DiscountRepositoryImpl implements DiscountRepository {
 		return response.getBody().getProducts();
 	}
 		else {
-			final String EMPTY_STRING = "";
-			List<Character> chars = convertStringToCharList(EMPTY_STRING);
-			
-			
-			 
+			return Collections.emptyList();
+
 		}
 	}
 	
-	public static List<Character> 
-    convertStringToCharList(String str) 
-    { 
-  
-        // Create an empty List of character 
-        List<Character> chars = new ArrayList<>(); 
-  
-        // For each character in the String 
-        // add it to the List 
-        for (char ch : str.toCharArray()) { 
-  
-            chars.add(ch); 
-        } 
-  
-        // return the List 
-        return chars; 
-    } 
+	
 	
 
 }
