@@ -11,10 +11,12 @@ import lombok.NoArgsConstructor;
 @Data
 public class Price {
 	
-	private Optional<Float> was;
-	private Optional<Float> then1;
-	private Optional<Float> then2;
+	private Float was;
+	private Float then1;
+	private Float then2;
 	private Object now;
 	
-
+	
+	
+	
 }
