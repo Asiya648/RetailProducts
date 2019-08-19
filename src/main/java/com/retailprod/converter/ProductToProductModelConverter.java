@@ -2,32 +2,27 @@ package com.retailprod.converter;
 
 import java.util.Optional;
 import java.util.Currency;
-
-
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.retailprod.domain.Price;
 import com.retailprod.domain.Product;
 import com.retailprod.model.LabelTypeEnum;
 import com.retailprod.model.ProductModel;
+
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class ProductToProductModelConverter {
 	
-	@Autowired
-	private ColorSwatchToColorSwatchModelConverter colorSwatchConverter;
-	
 	Currency c = Currency.getInstance("GBP"); 
 	
-	public ProductModel convert(Product source, LabelTypeEnum labelType) {
+	public ProductModel convert(Product source, Optional<LabelTypeEnum> labelType) {
 		
 		if(source==null)
 		{
 			return null;
 		}
 
+		log.info("price {}", source.getPrice());
 		String priceLabel = printPriceLabel(labelType, source.getPrice());
 		
 		log.info("product id {}", source.getProductId());
@@ -52,14 +47,19 @@ public class ProductToProductModelConverter {
 	 */
 	private String nowPrice(Price price) {
 		Float nowPrice;
+		String nowNewPrice;
+			nowPrice = Float.parseFloat((String)price.getNow());
+			if (nowPrice <10)
+			{
+				nowNewPrice=c.getSymbol()+Math.round(nowPrice);
+				
+			}
+			else
+			{
+				nowNewPrice=c.getSymbol()+ nowPrice;
+			}
 		
-		try {
-			nowPrice = Float.parseFloat((String)price.getnow());
-		}catch (Exception e) {
-			
-			
-		}	
-		return nowPrice <10 ? c.getSymbol()+Math.round(nowPrice) : c.getSymbol()+ nowPrice ;
+		return nowNewPrice;
 	}
 	
 	
@@ -67,40 +67,50 @@ public class ProductToProductModelConverter {
 	 * price label processes
 	 */
 	
-	private String printPriceLabel(LabelTypeEnum labelType, Price price) {
+	private String printPriceLabel(Optional<LabelTypeEnum> labelType, Price price) {
 		
 		String response="";
 		
-		LabelTypeEnum priceLabel = labelType.orElse(LabelTypeEnum.ShowWasNow);
+		LabelTypeEnum priceLabel = labelType.map(x -> {
+
+			return x;
+
+		}).orElse(LabelTypeEnum.SHOWWASNOW);
 		
-		
-		if(LabelTypeEnum.ShowWasNow == (priceLabel)) {
+		if(LabelTypeEnum.SHOWWASNOW == (priceLabel)) {
 			
-			response = price.getWas().map( x -> {
-				return "Was " +c.getSymbol()+x+", now "+nowPrice(price);
-			}).orElse("Was "+nowPrice(price)+", now "+nowPrice(price));
-		
+			response = "Was "+c.getSymbol()+String.valueOf(price.getWas())+", Now "+nowPrice(price);
+					
 		}
-		else if(LabelTypeEnum.ShowWasThenNow == (priceLabel)) 
+		else if(LabelTypeEnum.ShOWWASTHENNOW == (priceLabel)) 
 		{
-			if(!(Float.toString(price.getthen2())).isEmpty())
+			if(((!(String.valueOf(price.getThen2()).isEmpty())) || (price.getThen2() != null)) && ((!(String.valueOf(price.getThen1()).isEmpty())) || (price.getThen1() != null)))
 			{
-				response= "Was"+c.getSymbol()+Float.toString(price.getWas())+", then"+(Float.toString(price.getthen2()))+", now"+nowPrice(price);
+				response= "Was "+c.getSymbol()+String.valueOf(price.getWas())+", Then "+c.getSymbol()+(String.valueOf(price.getThen2()))+", Now "+nowPrice(price);
+				
 			}
-			else if(!(Float.toString(price.getthen1())).isEmpty())
+			else if(((!(String.valueOf(price.getThen2()).isEmpty())) || (price.getThen2() != null)) && ((String.valueOf(price.getThen1()).isEmpty()) || (price.getThen1() == null)))
 			{
-				response= "Was"+c.getSymbol()+Float.toString(price.getWas())+", then"+(Float.toString(price.getthen1()))+", now"+nowPrice(price);
+				response= "Was "+c.getSymbol()+String.valueOf(price.getWas())+", Then "+c.getSymbol()+(String.valueOf(price.getThen2()))+", Now "+nowPrice(price);
 			}
-			else if(((Float.toString(price.getthen2())).isEmpty()) && (!(Float.toString(price.getthen1())).isEmpty()))
+			else if(((!(String.valueOf(price.getThen1()).isEmpty())) || (price.getThen1() != null)) && ((String.valueOf(price.getThen2()).isEmpty()) || (price.getThen2() == null)))
 			{
-				response= "Was"+c.getSymbol()+Float.toString(price.getWas())+", then"+(Float.toString(price.getthen1()))+", now"+nowPrice(price);
+				response= "Was "+c.getSymbol()+String.valueOf(price.getWas())+", Then "+c.getSymbol()+(String.valueOf(price.getThen1()))+", Now "+nowPrice(price);
+			}
+			else if(((String.valueOf(price.getThen1()).isEmpty()) || (price.getThen1() == null)) && ((String.valueOf(price.getThen2()).isEmpty()) || (price.getThen2() == null)))
+			{
+				response= "Was "+c.getSymbol()+String.valueOf(price.getWas())+", Now "+nowPrice(price);
 			}
 			log.info(" {}",priceLabel);
 		}
-		else if(LabelTypeEnum.ShowPercDscount == (priceLabel)) 
+		else if(LabelTypeEnum.ShOWPERCDSCOUNT == (priceLabel)) 
 		{
-			Float percent= ((Float.parseFloat((String)price.getnow())-price.getwas())/price.getwas())*100;
-			response= String.format("%.0f%%", percent);
+			Float f= Float.parseFloat((String)price.getNow());
+			double newValNow= f;
+			double newValWas = price.getWas();
+			
+			double percent= calculateDiscountPersentange(newValNow,newValWas);
+			response= String.format("%.0f%%",percent)+" off -"+" Now "+nowPrice(price);
 			log.info(" {}",priceLabel);
 		}
 
@@ -110,7 +120,11 @@ public class ProductToProductModelConverter {
 	
 
 	
-	
+	private Double calculateDiscountPersentange(Double nowPrice, Double beforePrice) {
+
+		return ((beforePrice-nowPrice)/beforePrice)*100;
+
+	}
 	
 
 }
