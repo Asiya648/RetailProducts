@@ -2,6 +2,7 @@ package com.retailprod.services;
 
 import static org.junit.Assert.assertTrue;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +38,7 @@ public class DiscountServiceImplTest {
     }
 
     @Autowired
-    private DiscountService discauntService;
+    private DiscountService discountService;
 
     @MockBean
     private DiscountRepository discountRepository;
@@ -51,7 +52,7 @@ public class DiscountServiceImplTest {
 
     @Test
     public void get_productModels() {
-        List<ProductModel> pms = discauntService.getDiscountedProducts(CATEGORY_ID, Optional.empty());
+        List<ProductModel> pms = discountService.getDiscountedProducts(CATEGORY_ID, Optional.empty());
         assertTrue(pms.size()==0);
     }
 
