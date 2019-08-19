@@ -2,7 +2,7 @@
 
 
 Create a Restful webservice to request products in category 600001506 that have a price reduction.
-This Application returns a JASON response which returns an array of products and each of the element will contain the product id, title, color swatches, nowPrice, Price label and the discount percentage. Have used the Rest API which includes the entry point, model, service, controller, repository, converter and domain each of which is listed as below.The hashtable is used to translate the basic color to RGB and the invalid data errors are being trapped by writing out an empty string rather than throwing any complex exceptions.
+This Application returns a JASON response which returns an array of products and each of the element will contain the product id, title, color swatches, nowPrice, Price label and the discount percentage. Have used the Rest API which includes the entry point, model, service, controller, repository, converter and domain each of which is listed as below.The hashtable is used to translate the basic color to RGB and the invalid data errors are being trapped by writing out an empty string rather than throwing any complex exceptions. Have handled the test cases for all the scenarios mentioned.
 
 
 configuration -> configurations
