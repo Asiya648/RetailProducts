@@ -1,5 +1,8 @@
 package com.retailprod.converter;
 
+import java.util.Enumeration;
+import java.util.Hashtable;
+
 import org.springframework.core.convert.converter.Converter;
 
 import org.springframework.stereotype.Component;
@@ -26,22 +29,23 @@ public class ColorSwatchToColorSwatchModelConverter implements Converter<ColorSw
 	}
 
 	static String stringToColor(String str) {
-		  String color = null;
-
+		
+		 String value;
+		 
+		 
+		Hashtable<String, String> hashtable = new Hashtable<String, String>();
+         
 		  if (str == null) {
 		      return null;
 		  }
-		  else if (str.equalsIgnoreCase("Black"))
-		    color = "000000";
-		  else if(str.equalsIgnoreCase("Red"))
-		    color = "FF0000";
-		  else if(str.equalsIgnoreCase("White"))
-		    color = "FFFFFF";
-		  else if(str.equalsIgnoreCase("Blue"))
-		    color = "0000FF";
-		  else if(str.equalsIgnoreCase("Green"))
-		    color = "00FF00";
+		  hashtable.put("Black", "000000");
+		  hashtable.put("Red", "FF0000");
+		  hashtable.put("White", "FFFFFF");
+		  hashtable.put("Blue", "0000FF");
+		  hashtable.put("Green", "00FF00");
 		  
-           return color;
+		  value= hashtable.get(str);
+		   
+		  return value;
 }
 }
