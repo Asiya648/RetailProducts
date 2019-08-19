@@ -1,6 +1,7 @@
 package com.retailprod.domain;
 
 import lombok.AllArgsConstructor;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class ColorSwatch {
-	private String basicColor;
+	private String rgbColor;
 	private String skuId;
 	private String color;
 }
